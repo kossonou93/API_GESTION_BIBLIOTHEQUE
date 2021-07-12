@@ -3,7 +3,7 @@ package com.gsee.request;
 public class ReservationRequest {
 
 	private String etudiant;
-	private String libelle;
+	private Long livre;
 	private String debut;
 	private String fin;
 	private Boolean etat;
@@ -25,11 +25,12 @@ public class ReservationRequest {
 	public void setEtudiant(String etudiant) {
 		this.etudiant = etudiant;
 	}
-	public String getLibelle() {
-		return libelle;
+
+	public Long getLivre() {
+		return livre;
 	}
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
+	public void setLivre(Long livre) {
+		this.livre = livre;
 	}
 	public Boolean getEtat() {
 		return etat;

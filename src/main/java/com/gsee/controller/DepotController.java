@@ -53,39 +53,48 @@ public class DepotController {
 	
 	@PostMapping("/add")
 	public Object addReservationOrdinateur(@Valid @RequestBody ReservationRequest reservationRequest) {
-		Livre livre = livreRepository.findByLibelle(reservationRequest.getLibelle()).orElseThrow(() -> new ResourceNotFoundException("Livre not found for this :: " + reservationRequest.getLibelle()));
+		Livre livre = livreRepository.findById(reservationRequest.getLivre()).orElseThrow(() -> new ResourceNotFoundException("Livre not found for this :: " + reservationRequest.getLivre()));
 		List<Depot> res = depotRepository.findAll();
-		System.out.println(res);
-		
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Depot dep = null;
+		//System.out.println(res);
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		List<?> depot =new ArrayList();
 		try {
 			Date castedDebut=format.parse(reservationRequest.getDebut());
-			Date castedFin=format.parse(reservationRequest.getFin());
+			//Date castedFin=format.parse(reservationRequest.getFin());
 			//System.out.println(castedDebut);
-			System.out.println(castedFin);
+			System.out.println(" Date " + castedDebut);
 			 
 			 depot= depotRepository.CheckDepotAvailability(livre.getId(), true);
 			 System.out.println(depot);
 			 
-			 //if(reservation.isEmpty()) {
-				//il ne peut pas reserver
+			 if(livre.getEtat() == true) {
+				//il peut déposer
 				Etudiant etudiant = etudiantRepository.findByEmail(reservationRequest.getEtudiant()).orElseThrow(() -> new ResourceNotFoundException("Etudiant not found for this email :: " + reservationRequest.getEtudiant()));
 				
-				Depot dep = new Depot(castedDebut, castedFin, etudiant);
+				dep = new Depot(castedDebut, etudiant, livre);
 				//reserv.setOrdinateur(ordinateur);
-				depotRepository.save(dep);
 				
-				return depot;
+				
+				if(depotRepository.save(dep) !=null) {
+					System.out.println("le depot du livre est un succes !!!!!!!!!!");
+					livre.setEtat(false);
+					livreRepository.save(livre);
+				}else {
+					System.out.println("le depot du livre est un echec !!!!!!!!!!");
+				}
+				
+				return dep;
+				
+				} else {
+					return dep;
+				}
 					
-				//} else {
-				//return depot;
-				//}
 		}catch(Exception ex) {
 			 System.out.println(ex.getMessage());
 		}
 		
-		return depot;
+		return dep;
 		
 	}
 }

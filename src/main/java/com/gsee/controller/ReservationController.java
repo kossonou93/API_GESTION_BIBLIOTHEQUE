@@ -49,39 +49,49 @@ public class ReservationController {
 	
 	@PostMapping("/add")
 	public Object addReservationOrdinateur(@Valid @RequestBody ReservationRequest reservationRequest) {
-		Livre livre = livreRepository.findByLibelle(reservationRequest.getLibelle()).orElseThrow(() -> new ResourceNotFoundException("Livre not found for this :: " + reservationRequest.getLibelle()));
+		//Livre livre = livreRepository.findById(reservationRequest.getLivre());
+				//(reservationRequest.getLivre()).orElseThrow(() -> new ResourceNotFoundException("Livre not found for this :: " + reservationRequest.getLivre()));
 		List<Reservation> res = reservationRepository.findAll();
+		Reservation reserv = null;
 		System.out.println(res);
 		
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		List<?> reservation=new ArrayList();
+		//Llivre =new ArrayList();
 		try {
 			Date castedDebut=format.parse(reservationRequest.getDebut());
 			Date castedFin=format.parse(reservationRequest.getFin());
 			System.out.println(castedDebut);
 			System.out.println(castedFin);
 			 
-			 reservation= reservationRepository.CheckLivreAvailability(livre.getId(), false);
+			 Livre livre = livreRepository.CheckLivreAvailability(reservationRequest.getLivre(), false);
+					 //.CheckLivreAvailability(reservationRequest.getLivre(), false);
 			 System.out.println(reservation);
 			 
-			 if(reservation.isEmpty()) {
-				//il ne peut pas reserver
+			 if(livre.getEtat() == false) {
+				//il peut reserver
 				Etudiant etudiant = etudiantRepository.findByEmail(reservationRequest.getEtudiant()).orElseThrow(() -> new ResourceNotFoundException("Etudiant not found for this email :: " + reservationRequest.getEtudiant()));
 				
-				Reservation reserv = new Reservation(castedDebut, castedFin, etudiant);
-				//reserv.setOrdinateur(ordinateur);
-				reservationRepository.save(reserv);
+				reserv = new Reservation(castedDebut, castedFin, etudiant, livre);
 				
-				return reservation;
+				if(reservationRepository.save(reserv) !=null) {
+					System.out.println("la reservation est un succes !!!!!!!!!!");
+					livre.setEtat(true);
+					livreRepository.save(livre);
+				}else {
+					System.out.println("la reservation est un echec !!!!!!!!!!");
+				}
+				
+				return reserv;
 					
 				} else {
-					return reservation;
+					return reserv;
 				}
 		}catch(Exception ex) {
 			 System.out.println(ex.getMessage());
 		}
 		
-		return reservation;
+		return reserv;
 		
 	}
 }

@@ -19,9 +19,7 @@ public class Depot {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Date debut;
-
-	private Date fin;
+	private Date date;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "user_id")
@@ -38,18 +36,6 @@ public class Depot {
 		this.id = id;
 	}
 	
-	public Date getDebut() {
-		return debut;
-	}
-	public void setDebut(Date debut) {
-		this.debut = debut;
-	}
-	public Date getFin() {
-		return fin;
-	}
-	public void setFin(Date fin) {
-		this.fin = fin;
-	}
 	public Etudiant getEtudiant() {
 		return etudiant;
 	}
@@ -62,12 +48,22 @@ public class Depot {
 	public void setLivre(Livre livre) {
 		this.livre = livre;
 	}
-	public Depot(Date debut, Date fin, Etudiant etudiant) {
-		super();
-		this.debut = debut;
-		this.fin = fin;
-		this.etudiant = etudiant;
-	}
 	
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Depot() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Depot(Date date, Etudiant etudiant, Livre livre) {
+		super();
+		this.date = date;
+		this.etudiant = etudiant;
+		this.livre = livre;
+	}
 	
 }

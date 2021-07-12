@@ -18,14 +18,6 @@ public class SignupRequest {
     
 	@NotBlank
     private String email;
-	
-	private String date_naissance;
-	
-	private String lieu_naissance;
-	
-	private String photo;
-	
-	private String whatsapp;
     
     private Set<String> role;
     
@@ -87,38 +79,6 @@ public class SignupRequest {
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
-	}
-
-	public String getDate_naissance() {
-		return date_naissance;
-	}
-
-	public void setDate_naissance(String date_naissance) {
-		this.date_naissance = date_naissance;
-	}
-
-	public String getLieu_naissance() {
-		return lieu_naissance;
-	}
-
-	public void setLieu_naissance(String lieu_naissance) {
-		this.lieu_naissance = lieu_naissance;
-	}
-
-	public String getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
-
-	public String getWhatsapp() {
-		return whatsapp;
-	}
-
-	public void setWhatsapp(String whatsapp) {
-		this.whatsapp = whatsapp;
 	}
 	
 	

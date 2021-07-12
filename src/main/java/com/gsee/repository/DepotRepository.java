@@ -10,9 +10,9 @@ import com.gsee.model.Depot;
 
 public interface DepotRepository extends JpaRepository<Depot, Long>{
 
-	@Query(value="SELECT * FROM depots WHERE livre_id=:idLivre AND etat=:etat",nativeQuery=true)
+	@Query(value="SELECT * FROM livres WHERE id=:idLivre AND etat=:etat",nativeQuery=true)
 	List<?> CheckDepotAvailability(Long idLivre, Boolean etat);
 	///*
-	@Query(value="SELECT * FROM depots WHERE livre_id=:idLivre AND etat=:etat)",nativeQuery=true)
-	List<?> CheckDepot(Long idLivre, Boolean etat);
+	//@Query(value="SELECT * FROM depots WHERE livre_id=:idLivre AND etat=:etat)",nativeQuery=true)
+	//List<?> CheckDepot(Long idLivre, Boolean etat);
 }

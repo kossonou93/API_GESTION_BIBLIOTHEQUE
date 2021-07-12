@@ -9,10 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.gsee.model.Reservation;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
-
-	@Query(value="SELECT * FROM depots WHERE livre_id=:idLivre AND etat=:etat",nativeQuery=true)
-	List<?> CheckLivreAvailability(Long idLivre, Boolean etat);
 	///*
-	@Query(value="SELECT * FROM depots WHERE livre_id=:idLivre AND etat=:etat)",nativeQuery=true)
+	@Query(value="SELECT * FROM livres WHERE id=:idLivre AND etat=:etat)",nativeQuery=true)
 	List<?> CheckLivre(Long idLivre, Boolean etat);
 }

@@ -65,7 +65,7 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 	
 		// Sign in one User with his Email and password
-		/*@PostMapping("/signin")
+		@PostMapping("/signin")
 		public Object authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 			
 			Optional<User> user = userRepository.findByEmail(loginRequest.getEmail());
@@ -92,7 +92,7 @@ public class UserController {
 						);
 				//return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
 				//return ResponseEntity.ok(user);
-		}*/
+		}
 		
 		/*
 		// Add one User
